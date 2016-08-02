@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate.models;
+package io.androidblog.apps.mysimpletweets.models;
 
 import java.util.List;
 
