@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:appCompat="http://schemas.android.com/tools"
+    android:id="@+id/rlTweet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin">
 
     <ImageView
-        android:id="@+id/ivTweetImg"
+        android:id="@+id/ivUserImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -19,8 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/ivTweetImg"
-        android:layout_toRightOf="@+id/ivTweetImg"
+        android:layout_toEndOf="@+id/ivUserImg"
+        android:layout_toRightOf="@+id/ivUserImg"
         android:textAppearance="?android:attr/textAppearanceMedium"
         appCompat:text="pictoline" />
 
@@ -49,12 +50,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvUserName"
-        android:layout_toEndOf="@+id/ivTweetImg"
-        android:layout_toRightOf="@+id/ivTweetImg"
+        android:layout_toEndOf="@+id/ivUserImg"
+        android:layout_toRightOf="@+id/ivUserImg"
         appCompat:text="En el 2011 Morolake Akinosun tuiteó que algún día competiría en unos Juegos Olímpicos." />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/ivTweetImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvBody" />
@@ -64,39 +65,52 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvBody"
         android:layout_alignStart="@+id/tvBody"
-        android:layout_below="@+id/imageView2"
+        android:layout_below="@+id/ivTweetImg"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnReply"
+            android:background="@android:color/transparent"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            android:stateListAnimator="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_launcher"
-            android:gravity="left|center_vertical"/>
+            android:drawableLeft="@drawable/reply"
+
+            android:gravity="left|center_vertical" />
 
         <Button
             android:id="@+id/btnRetweet"
+            android:background="@android:color/transparent"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            android:stateListAnimator="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_launcher"
+            android:drawableLeft="@drawable/retweet"
             android:gravity="left|center_vertical" />
 
         <Button
             android:id="@+id/btnLike"
+            android:background="@android:color/transparent"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            android:stateListAnimator="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_launcher"
+            android:drawableLeft="@drawable/like"
             android:gravity="left|center_vertical" />
 
         <Button
             android:id="@+id/btnDM"
+            android:background="@android:color/transparent"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            android:stateListAnimator="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_launcher"
+            android:drawableLeft="@drawable/dm"
             android:gravity="left|center_vertical" />
 
     </LinearLayout>

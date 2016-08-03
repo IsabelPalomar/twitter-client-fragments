@@ -1,7 +1,11 @@
 package io.androidblog.apps.mysimpletweets.models;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class Tweet {
 
@@ -41,4 +45,18 @@ public class Tweet {
         return tweet;
     }
 
+    public static ArrayList<Tweet> fromJSONArray(JSONArray response) {
+        ArrayList<Tweet> tweets =  new ArrayList<>();
+
+        for (int x=0;x<response.length();x++){
+            try {
+                tweets.add(fromJSON(response.getJSONObject(x)));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                continue;
+            }
+        }
+
+        return tweets;
+    }
 }
