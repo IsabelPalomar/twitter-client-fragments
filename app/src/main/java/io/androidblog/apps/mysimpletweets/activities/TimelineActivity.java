@@ -1,4 +1,4 @@
-package io.androidblog.apps.mysimpletweets;
+package io.androidblog.apps.mysimpletweets.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +14,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import io.androidblog.apps.mysimpletweets.R;
+import io.androidblog.apps.mysimpletweets.TwitterApplication;
+import io.androidblog.apps.mysimpletweets.TwitterClient;
 
 public class TimelineActivity extends AppCompatActivity {
 

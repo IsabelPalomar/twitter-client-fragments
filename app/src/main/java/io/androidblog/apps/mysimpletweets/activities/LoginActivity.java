@@ -1,4 +1,4 @@
-package io.androidblog.apps.mysimpletweets;
+package io.androidblog.apps.mysimpletweets.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.view.Menu;
 import android.view.View;
 
 import com.codepath.oauth.OAuthLoginActionBarActivity;
+
+import io.androidblog.apps.mysimpletweets.R;
+import io.androidblog.apps.mysimpletweets.TwitterClient;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
