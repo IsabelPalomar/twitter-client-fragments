@@ -1,64 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:appCompat="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:appCompat="http://schemas.android.com/tools">
+    android:padding="@dimen/activity_horizontal_margin">
 
     <ImageView
+        android:id="@+id/ivTweetImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        appCompat:src="@drawable/ic_launcher"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        appCompat:text="pictoline"
-        android:id="@+id/textView"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView" />
+        appCompat:src="@drawable/ic_launcher" />
 
     <TextView
+        android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="\@pictoline"
-        android:id="@+id/textView2"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView" />
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/ivTweetImg"
+        android:layout_toRightOf="@+id/ivTweetImg"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        appCompat:text="pictoline" />
 
     <TextView
+        android:id="@+id/tvUserId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvUserName"
+        android:layout_toEndOf="@+id/tvUserName"
+        android:layout_toRightOf="@+id/tvUserName"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="1d"
-        android:id="@+id/textView3"
-        android:layout_alignTop="@+id/textView2"
+        appCompat:text="\@pictoline" />
+
+    <TextView
+        android:id="@+id/tvCreatedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignTop="@+id/tvUserId"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        appCompat:text="1d" />
 
     <TextView
+        android:id="@+id/tvBody"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="En el 2011 Morolake Akinosun tuiteó que algún día competiría en unos Juegos Olímpicos."
-        android:id="@+id/textView4"
-        android:layout_below="@+id/textView"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView" />
+        android:layout_below="@+id/tvUserName"
+        android:layout_toEndOf="@+id/ivTweetImg"
+        android:layout_toRightOf="@+id/ivTweetImg"
+        appCompat:text="En el 2011 Morolake Akinosun tuiteó que algún día competiría en unos Juegos Olímpicos." />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBody" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:orientation="horizontal"
-        android:layout_below="@+id/textView4"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4">
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvBody"
+        android:layout_alignStart="@+id/tvBody"
+        android:layout_below="@+id/imageView2"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnReply"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_launcher"
+            android:gravity="left|center_vertical"/>
+
+        <Button
+            android:id="@+id/btnRetweet"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_launcher"
+            android:gravity="left|center_vertical" />
+
+        <Button
+            android:id="@+id/btnLike"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_launcher"
+            android:gravity="left|center_vertical" />
+
+        <Button
+            android:id="@+id/btnDM"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_launcher"
+            android:gravity="left|center_vertical" />
 
     </LinearLayout>
 </RelativeLayout>
