@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -39,6 +40,7 @@ public class TimelineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         ButterKnife.bind(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -50,12 +52,15 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
 
+        tweets = new ArrayList<>();
+
         client = TwitterApplication.getRestClient();
         populateTimeline();
 
         rvTweets.setHasFixedSize(true);
         customAdapter = new CustomRecyclerViewAdapter(this, tweets);
         rvTweets.setAdapter(customAdapter);
+        rvTweets.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
@@ -63,8 +68,8 @@ public class TimelineActivity extends AppCompatActivity {
         client.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                Log.d("DEBUG", response.toString());
                 tweets.addAll(Tweet.fromJSONArray(response));
+                customAdapter.addAll(tweets);
             }
 
             @Override
