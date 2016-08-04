@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
@@ -15,7 +17,8 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+		new FullScreenActivity().invoke();
+        setContentView(R.layout.activity_login);
 	}
 
 
@@ -46,6 +49,15 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	// This should be tied to a button used to login
 	public void loginToRest(View view) {
 		getClient().connect();
+	}
+
+	class FullScreenActivity {
+		public void invoke() {
+			// remove title
+			requestWindowFeature(Window.FEATURE_NO_TITLE);
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
 	}
 
 }

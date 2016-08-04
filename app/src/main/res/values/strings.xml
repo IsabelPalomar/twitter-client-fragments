@@ -2,7 +2,9 @@
 <resources>
 
     <string name="app_name">Simple Tweets</string>
-    <string name="login_label">Connect to Twitter</string>
+    <string name="login_label">Log in</string>
     <string name="title_activity_timeline">Home Timeline</string>
+    <string name="welcome_to_twitter">Welcome to Twitter</string>
+    <string name="twitter_description">Get real-time updated about what matters to you</string>
 
 </resources>
