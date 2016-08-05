@@ -2,6 +2,7 @@ package io.androidblog.apps.mysimpletweets.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -91,6 +92,7 @@ public class TimelineActivity extends AppCompatActivity {
     public void createTweet() {
         FragmentManager fm = getSupportFragmentManager();
         ComposeTweetDialogFragment editNameDialogFragment = new ComposeTweetDialogFragment();
+        editNameDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
         editNameDialogFragment.show(fm, "");
     }
 }
