@@ -25,6 +25,7 @@ import io.androidblog.apps.mysimpletweets.TwitterApplication;
 import io.androidblog.apps.mysimpletweets.TwitterClient;
 import io.androidblog.apps.mysimpletweets.adapters.CustomRecyclerViewAdapter;
 import io.androidblog.apps.mysimpletweets.models.Tweet;
+import io.androidblog.apps.mysimpletweets.utils.EndlessRecyclerViewScrollListener;
 
 public class TimelineActivity extends AppCompatActivity {
 
@@ -33,7 +34,8 @@ public class TimelineActivity extends AppCompatActivity {
     private TwitterClient client;
     ArrayList<Tweet> tweets;
     CustomRecyclerViewAdapter customAdapter;
-
+    int since = 1;
+    int count = 25;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,20 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.setHasFixedSize(true);
         customAdapter = new CustomRecyclerViewAdapter(this, tweets);
         rvTweets.setAdapter(customAdapter);
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+
+        // Add the scroll listener
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvTweets.setLayoutManager(linearLayoutManager);
+
+        rvTweets.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                since+=25;
+                populateTimeline();
+            }
+        });
 
     }
 
@@ -76,7 +91,7 @@ public class TimelineActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("DEBUG", errorResponse.toString());
             }
-        });
+        }, since, count);
     }
 
 }
