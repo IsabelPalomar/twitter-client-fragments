@@ -1,4 +1,4 @@
-package io.androidblog.apps.mysimpletweets;
+package io.androidblog.apps.mysimpletweets.network;
 
 import android.content.Context;
 

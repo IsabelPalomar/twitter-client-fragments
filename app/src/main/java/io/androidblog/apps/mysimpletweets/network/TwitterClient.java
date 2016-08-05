@@ -1,7 +1,6 @@
-package io.androidblog.apps.mysimpletweets;
+package io.androidblog.apps.mysimpletweets.network;
 
 import org.scribe.builder.api.Api;
-import org.scribe.builder.api.FlickrApi;
 import org.scribe.builder.api.TwitterApi;
 
 import android.content.Context;
@@ -34,12 +33,12 @@ public class TwitterClient extends OAuthBaseClient {
 	}
 
 
-	public void getHomeTimeline(AsyncHttpResponseHandler handler)
+	public void getHomeTimeline(AsyncHttpResponseHandler handler, int since, int count)
 	{
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 		RequestParams params = new RequestParams();
-		params.put("count", 25);
-		params.put("since_id", 1);
+		params.put("since_id", since);
+		params.put("count", count);
 		getClient().get(apiUrl, params, handler);
 	}
 

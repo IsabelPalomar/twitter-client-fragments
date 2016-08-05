@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 import io.androidblog.apps.mysimpletweets.R;
-import io.androidblog.apps.mysimpletweets.TwitterClient;
+import io.androidblog.apps.mysimpletweets.network.TwitterClient;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 

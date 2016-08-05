@@ -2,12 +2,11 @@ package io.androidblog.apps.mysimpletweets.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.activeandroid.util.Log;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -19,10 +18,12 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import io.androidblog.apps.mysimpletweets.R;
-import io.androidblog.apps.mysimpletweets.TwitterApplication;
-import io.androidblog.apps.mysimpletweets.TwitterClient;
+import io.androidblog.apps.mysimpletweets.fragments.ComposeTweetDialogFragment;
+import io.androidblog.apps.mysimpletweets.network.TwitterApplication;
+import io.androidblog.apps.mysimpletweets.network.TwitterClient;
 import io.androidblog.apps.mysimpletweets.adapters.CustomRecyclerViewAdapter;
 import io.androidblog.apps.mysimpletweets.models.Tweet;
 import io.androidblog.apps.mysimpletweets.utils.EndlessRecyclerViewScrollListener;
@@ -31,6 +32,8 @@ public class TimelineActivity extends AppCompatActivity {
 
     @BindView(R.id.rvTweets)
     RecyclerView rvTweets;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     private TwitterClient client;
     ArrayList<Tweet> tweets;
     CustomRecyclerViewAdapter customAdapter;
@@ -45,20 +48,11 @@ public class TimelineActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        tweets = new ArrayList<>();
 
         client = TwitterApplication.getRestClient();
         populateTimeline();
 
+        tweets = new ArrayList<>();
         rvTweets.setHasFixedSize(true);
         customAdapter = new CustomRecyclerViewAdapter(this, tweets);
         rvTweets.setAdapter(customAdapter);
@@ -72,11 +66,10 @@ public class TimelineActivity extends AppCompatActivity {
             public void onLoadMore(int page, int totalItemsCount) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                since+=25;
+                since += 25;
                 populateTimeline();
             }
         });
-
     }
 
     private void populateTimeline() {
@@ -94,4 +87,10 @@ public class TimelineActivity extends AppCompatActivity {
         }, since, count);
     }
 
+    @OnClick(R.id.fab)
+    public void createTweet() {
+        FragmentManager fm = getSupportFragmentManager();
+        ComposeTweetDialogFragment editNameDialogFragment = new ComposeTweetDialogFragment();
+        editNameDialogFragment.show(fm, "");
+    }
 }
