@@ -53,11 +53,11 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
 
         holder.tvUserName.setText(tweet.getUser().getName());
         holder.tvUserId.setText(Constants.TWEET_PREFIX + tweet.getUser().getScreenName());
+        holder.tvCreatedAt.setText(tweet.getCreatedAt());
         holder.tvBody.setText(tweet.getBody());
 
         Glide.with(getContext())
                 .load(tweet.getUser().getProfileImageUrl())
-                .centerCrop()
                 .bitmapTransform(new RoundedCornersTransformation(getContext(), 2, 2,
                 RoundedCornersTransformation.CornerType.ALL))
                 .into(holder.ivUserImg);

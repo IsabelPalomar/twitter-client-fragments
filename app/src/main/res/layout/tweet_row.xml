@@ -4,12 +4,12 @@
     android:id="@+id/rlTweet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/activity_xs_horizontal_margin">
+    android:padding="@dimen/activity_xs_horizontal_padding">
 
     <ImageView
         android:id="@+id/ivUserImg"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -18,12 +18,16 @@
     <TextView
         android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
+        android:textColor="#000000"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/ivUserImg"
         android:layout_toRightOf="@+id/ivUserImg"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        appCompat:text="pictoline" />
+        android:textSize="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginLeft="@dimen/activity_xs_horizontal_margin"
+        appCompat:text="pictoline"
+        />
 
     <TextView
         android:id="@+id/tvUserId"
@@ -33,6 +37,9 @@
         android:layout_toEndOf="@+id/tvUserName"
         android:layout_toRightOf="@+id/tvUserName"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginLeft="@dimen/activity_xxs_horizontal_margin"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginTop="-6dp"
         appCompat:text="\@pictoline" />
 
     <TextView
@@ -42,6 +49,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/tvUserId"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginLeft="@dimen/activity_xs_horizontal_margin"
         android:textAppearance="?android:attr/textAppearanceSmall"
         appCompat:text="1d" />
 
@@ -52,18 +61,25 @@
         android:layout_below="@+id/tvUserName"
         android:layout_toEndOf="@+id/ivUserImg"
         android:layout_toRightOf="@+id/ivUserImg"
+        android:layout_marginLeft="@dimen/activity_xs_horizontal_margin"
+        android:textSize="15dp"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#000000"
         appCompat:text="En el 2011 Morolake Akinosun tuiteó que algún día competiría en unos Juegos Olímpicos." />
 
     <ImageView
         android:id="@+id/ivTweetImg"
+        android:layout_marginLeft="@dimen/activity_xs_horizontal_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvBody" />
 
     <LinearLayout
+        android:id="@+id/llIcons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvBody"
+        android:layout_marginLeft="@dimen/activity_xs_horizontal_margin"
         android:layout_alignStart="@+id/tvBody"
         android:layout_below="@+id/ivTweetImg"
         android:orientation="horizontal">
@@ -77,7 +93,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/reply"
-
+            android:textSize="6dp"
             android:gravity="left|center_vertical" />
 
         <Button
@@ -89,6 +105,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/retweet"
+            android:textSize="6dp"
             android:gravity="left|center_vertical" />
 
         <Button
@@ -100,6 +117,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/like"
+            android:textSize="6dp"
             android:gravity="left|center_vertical" />
 
         <Button
@@ -111,7 +129,14 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/dm"
+            android:textSize="6dp"
             android:gravity="left|center_vertical" />
 
     </LinearLayout>
+
+    <View
+        android:layout_below="@+id/llIcons"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#B0BEC5"/>
 </RelativeLayout>
