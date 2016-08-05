@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import io.androidblog.apps.mysimpletweets.R;
 import io.androidblog.apps.mysimpletweets.models.Tweet;
 import io.androidblog.apps.mysimpletweets.utils.Constants;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecyclerViewAdapter.ViewHolder> {
 
@@ -57,6 +58,8 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         Glide.with(getContext())
                 .load(tweet.getUser().getProfileImageUrl())
                 .centerCrop()
+                .bitmapTransform(new RoundedCornersTransformation(getContext(), 2, 2,
+                RoundedCornersTransformation.CornerType.ALL))
                 .into(holder.ivUserImg);
 
     }

@@ -4,12 +4,12 @@
     android:id="@+id/rlTweet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:padding="@dimen/activity_xs_horizontal_margin">
 
     <ImageView
         android:id="@+id/ivUserImg"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
