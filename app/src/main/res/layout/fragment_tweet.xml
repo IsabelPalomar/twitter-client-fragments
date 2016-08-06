@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:appCompat="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,6 +13,7 @@
         android:layout_alignParentTop="true"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/ic_close"
+        android:onClick="closeDialog"
         android:stateListAnimator="@null"
         android:textColor="@color/colorAccent" />
 
@@ -39,7 +39,10 @@
         android:fontFamily="sans-serif-light"
         android:gravity="top|left"
         android:hint="What's happening?"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:padding="@dimen/activity_xs_horizontal_margin"
+        android:textColor="#000"
+        android:textColorHint="@color/blueGray" />
 
 
     <LinearLayout
@@ -50,8 +53,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="@dimen/activity_xs_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_xs_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_xs_horizontal_margin"
         android:orientation="horizontal">
 
         <Button
@@ -108,9 +111,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="140"
-            android:textColor="@color/blueGray"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/blueGray" />
 
         <Button
             android:id="@+id/btnPostTweet"
