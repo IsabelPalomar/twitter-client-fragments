@@ -1,8 +1,11 @@
 package io.androidblog.apps.mysimpletweets.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +13,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.androidblog.apps.mysimpletweets.R;
 import io.androidblog.apps.mysimpletweets.models.Tweet;
 import io.androidblog.apps.mysimpletweets.utils.Constants;
+import io.androidblog.apps.mysimpletweets.utils.PatternEditableBuilder;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecyclerViewAdapter.ViewHolder> {
@@ -61,6 +67,34 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
                 .bitmapTransform(new RoundedCornersTransformation(getContext(), 2, 2,
                 RoundedCornersTransformation.CornerType.ALL))
                 .into(holder.ivUserImg);
+
+        //Set pattern
+        new PatternEditableBuilder().
+                addPattern(Pattern.compile("\\@(\\w+)"), ContextCompat.getColor(getContext(), R.color.colorPrimary),
+                        new PatternEditableBuilder.SpannableClickedListener() {
+                            @Override
+                            public void onSpanClicked(String text) {
+
+                                String url = Constants.TWITTER_BASE_URL + text;
+
+                                Intent i = new Intent(Intent.ACTION_VIEW);
+                                i.setData(Uri.parse(url));
+                                getContext().startActivity(i);
+
+                            }
+                        }).
+                addPattern(Pattern.compile("\\#(\\w+)"), ContextCompat.getColor(getContext(), R.color.colorPrimary),
+                        new PatternEditableBuilder.SpannableClickedListener() {
+                            @Override
+                            public void onSpanClicked(String text) {
+                                text = text.replace("#", "");
+                                String url = Constants.TWITTER_HASHTAG_BASE_URL + text;
+
+                                Intent i = new Intent(Intent.ACTION_VIEW);
+                                i.setData(Uri.parse(url));
+                                getContext().startActivity(i);
+                            }
+                        }).into(holder.tvBody);
 
     }
 
