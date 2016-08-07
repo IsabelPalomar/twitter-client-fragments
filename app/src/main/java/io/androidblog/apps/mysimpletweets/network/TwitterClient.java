@@ -4,10 +4,14 @@ import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TwitterApi;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import io.androidblog.apps.mysimpletweets.models.Tweet;
+import io.androidblog.apps.mysimpletweets.models.User;
 
 /*
  * 
@@ -41,6 +45,16 @@ public class TwitterClient extends OAuthBaseClient {
 		params.put("count", count);
 		getClient().get(apiUrl, params, handler);
 	}
+
+	public void statusesUpdate(AsyncHttpResponseHandler handler, Tweet tweet){
+
+		String apiUrl = getApiUrl("statuses/update.json");
+		RequestParams params = new RequestParams();
+		params.put("status", tweet.getBody());
+		getClient().post(apiUrl, params, handler);
+
+	}
+
 
 
 

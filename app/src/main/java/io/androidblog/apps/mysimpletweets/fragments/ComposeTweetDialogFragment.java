@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.androidblog.apps.mysimpletweets.R;
+import io.androidblog.apps.mysimpletweets.models.Tweet;
+import io.androidblog.apps.mysimpletweets.utils.Constants;
 
 public class ComposeTweetDialogFragment extends DialogFragment {
 
@@ -28,6 +31,11 @@ public class ComposeTweetDialogFragment extends DialogFragment {
     TextView tvChars;
 
     public ComposeTweetDialogFragment() {
+    }
+
+    // 1. Defines the listener interface with a method passing back data result.
+    public interface ComposeTweetDialogFragmentListener {
+        void onFinishComposeTweetDialogFragment(Tweet tweet);
     }
 
     @Override
@@ -85,10 +93,27 @@ public class ComposeTweetDialogFragment extends DialogFragment {
         super.onResume();
     }
 
-
     @OnClick(R.id.btnClose)
     public void closeDialog() {
         dismiss();
+    }
+
+    @OnClick(R.id.btnPostTweet)
+    public void postTweet() {
+
+        String text = etTweet.getText().toString();
+
+        if(!text.equals(Constants.EMPTY_STRING)){
+
+            Tweet tweet = new Tweet();
+            tweet.setBody(text);
+
+            ComposeTweetDialogFragmentListener listener = (ComposeTweetDialogFragmentListener) getActivity();
+            listener.onFinishComposeTweetDialogFragment(tweet);
+            dismiss();
+        }
+
+
     }
 
 }

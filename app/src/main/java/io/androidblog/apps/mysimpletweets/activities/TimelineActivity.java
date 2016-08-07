@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.activeandroid.util.Log;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,7 +31,7 @@ import io.androidblog.apps.mysimpletweets.adapters.CustomRecyclerViewAdapter;
 import io.androidblog.apps.mysimpletweets.models.Tweet;
 import io.androidblog.apps.mysimpletweets.utils.EndlessRecyclerViewScrollListener;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity implements ComposeTweetDialogFragment.ComposeTweetDialogFragmentListener{
 
     @BindView(R.id.rvTweets)
     RecyclerView rvTweets;
@@ -94,5 +96,24 @@ public class TimelineActivity extends AppCompatActivity {
         ComposeTweetDialogFragment editNameDialogFragment = new ComposeTweetDialogFragment();
         editNameDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
         editNameDialogFragment.show(fm, "");
+    }
+
+    @Override
+    public void onFinishComposeTweetDialogFragment(Tweet tweet) {
+
+        client.statusesUpdate(new TextHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String response) {
+                Toast.makeText(TimelineActivity.this, "Hi, we are saving your tweet " , Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(TimelineActivity.this, "Error - " + responseString.toString() , Toast.LENGTH_SHORT).show();
+            }
+
+        }, tweet);
+
     }
 }
