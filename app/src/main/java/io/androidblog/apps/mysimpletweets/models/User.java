@@ -1,9 +1,12 @@
 package io.androidblog.apps.mysimpletweets.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User {
+public class User implements Parcelable {
 
     private String name;
     private long uid;
@@ -56,4 +59,40 @@ public class User {
 
         return user;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeLong(this.uid);
+        dest.writeString(this.screenName);
+        dest.writeString(this.profileImageUrl);
+    }
+
+    public User() {
+    }
+
+    protected User(Parcel in) {
+        this.name = in.readString();
+        this.uid = in.readLong();
+        this.screenName = in.readString();
+        this.profileImageUrl = in.readString();
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

@@ -28,6 +28,7 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.androidblog.apps.mysimpletweets.R;
+import io.androidblog.apps.mysimpletweets.activities.DetailActivity;
 import io.androidblog.apps.mysimpletweets.activities.TimelineActivity;
 import io.androidblog.apps.mysimpletweets.fragments.ComposeTweetDialogFragment;
 import io.androidblog.apps.mysimpletweets.models.Tweet;
@@ -112,6 +113,16 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
                 ComposeTweetDialogFragment editNameDialogFragment = ComposeTweetDialogFragment.newInstance(Constants.TWEET_PREFIX + tweet.getUser().getScreenName());
                 editNameDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
                 editNameDialogFragment.show(fm, "");
+            }
+        });
+
+        holder.rlTweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), DetailActivity.class);
+                i.putExtra("tweet", tweet);
+                getContext().startActivity(i);
+
             }
         });
 
