@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +28,8 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.androidblog.apps.mysimpletweets.R;
+import io.androidblog.apps.mysimpletweets.activities.TimelineActivity;
+import io.androidblog.apps.mysimpletweets.fragments.ComposeTweetDialogFragment;
 import io.androidblog.apps.mysimpletweets.models.Tweet;
 import io.androidblog.apps.mysimpletweets.utils.Constants;
 import io.androidblog.apps.mysimpletweets.utils.PatternEditableBuilder;
@@ -34,10 +39,12 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
 
     private List<Tweet> tweets;
     private Context context;
+    private FragmentManager supportFragmentManager;
 
-    public CustomRecyclerViewAdapter(Context context, ArrayList<Tweet> tweets) {
+    public CustomRecyclerViewAdapter(Context context, ArrayList<Tweet> tweets, FragmentManager supportFragmentManager) {
         this.context = context;
         this.tweets = tweets;
+        this.supportFragmentManager = supportFragmentManager;
     }
 
     private Context getContext() {
@@ -55,7 +62,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final Tweet tweet = tweets.get(position);
 
         holder.tvUserName.setText(tweet.getUser().getName());
@@ -96,6 +103,17 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
                                 getContext().startActivity(i);
                             }
                         }).into(holder.tvBody);
+
+
+        holder.btnReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = supportFragmentManager;
+                ComposeTweetDialogFragment editNameDialogFragment = ComposeTweetDialogFragment.newInstance(Constants.TWEET_PREFIX + tweet.getUser().getScreenName());
+                editNameDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+                editNameDialogFragment.show(fm, "");
+            }
+        });
 
     }
 

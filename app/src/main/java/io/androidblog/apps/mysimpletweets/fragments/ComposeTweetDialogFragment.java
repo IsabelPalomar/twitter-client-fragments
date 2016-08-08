@@ -29,9 +29,19 @@ public class ComposeTweetDialogFragment extends DialogFragment {
     Button btnClose;
     @BindView(R.id.tvChars)
     TextView tvChars;
+    String replyTo;
 
     public ComposeTweetDialogFragment() {
     }
+
+    public static ComposeTweetDialogFragment newInstance(String replyTo) {
+        ComposeTweetDialogFragment frag = new ComposeTweetDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("reply", replyTo);
+        frag.setArguments(args);
+        return frag;
+    }
+
 
     // 1. Defines the listener interface with a method passing back data result.
     public interface ComposeTweetDialogFragmentListener {
@@ -49,7 +59,12 @@ public class ComposeTweetDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Get field from view
+
+        replyTo = getArguments().getString("reply");
+
+        if(!replyTo.equals(Constants.EMPTY_STRING))
+            etTweet.setText(replyTo + Constants.EMPTY_STRING);
+
 
         final TextWatcher mTextEditorWatcher = new TextWatcher() {
 

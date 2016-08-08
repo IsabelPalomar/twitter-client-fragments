@@ -61,7 +61,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
         tweets = new ArrayList<>();
         rvTweets.setHasFixedSize(true);
-        customAdapter = new CustomRecyclerViewAdapter(this, tweets);
+        customAdapter = new CustomRecyclerViewAdapter(this, tweets, getSupportFragmentManager());
         rvTweets.setAdapter(customAdapter);
 
         // Add the scroll listener
@@ -111,7 +111,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     @OnClick(R.id.fab)
     public void createTweet() {
         FragmentManager fm = getSupportFragmentManager();
-        ComposeTweetDialogFragment editNameDialogFragment = new ComposeTweetDialogFragment();
+        ComposeTweetDialogFragment editNameDialogFragment = ComposeTweetDialogFragment.newInstance("");
         editNameDialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
         editNameDialogFragment.show(fm, "");
     }

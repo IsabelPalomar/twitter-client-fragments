@@ -22,6 +22,8 @@ public class Tweet implements Parcelable {
     private User user;
     private String createdAt;
 
+    private String replyTo;
+
     public String getBody() {
         return body;
     }
@@ -52,6 +54,14 @@ public class Tweet implements Parcelable {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getReplyTo() {
+        return replyTo;
+    }
+
+    public void setReplyTo(String replyTo) {
+        this.replyTo = replyTo;
     }
 
     public static Tweet fromJSON(JSONObject jsonObject){
