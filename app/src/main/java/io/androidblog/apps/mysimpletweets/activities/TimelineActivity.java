@@ -25,6 +25,7 @@ import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import io.androidblog.apps.mysimpletweets.R;
 import io.androidblog.apps.mysimpletweets.fragments.ComposeTweetDialogFragment;
+import io.androidblog.apps.mysimpletweets.models.User;
 import io.androidblog.apps.mysimpletweets.network.TwitterApplication;
 import io.androidblog.apps.mysimpletweets.network.TwitterClient;
 import io.androidblog.apps.mysimpletweets.adapters.CustomRecyclerViewAdapter;
@@ -99,18 +100,23 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     }
 
     @Override
-    public void onFinishComposeTweetDialogFragment(Tweet tweet) {
+    public void onFinishComposeTweetDialogFragment(final Tweet tweet) {
 
         client.statusesUpdate(new TextHttpResponseHandler(){
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String response) {
-                Toast.makeText(TimelineActivity.this, "Hi, we are saving your tweet " , Toast.LENGTH_SHORT).show();
+
+                User user = TwitterApplication.getUser();
+                tweet.setUser(user);
+                customAdapter.insert(0, tweet);
+                rvTweets.scrollToPosition(0);
+
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(TimelineActivity.this, "Error - " + responseString.toString() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(TimelineActivity.this, "Error" + responseString.toString() , Toast.LENGTH_SHORT).show();
             }
 
         }, tweet);

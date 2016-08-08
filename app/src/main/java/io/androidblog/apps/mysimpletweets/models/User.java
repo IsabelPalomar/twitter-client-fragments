@@ -26,6 +26,22 @@ public class User {
         return profileImageUrl;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
+    }
+
+    public void setScreenName(String screenName) {
+        this.screenName = screenName;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
     public static User fromJSON(JSONObject jsonObject){
         User user = new User();
 
