@@ -1,8 +1,9 @@
-package io.androidblog.apps.mysimpletweets.network;
+package io.androidblog.apps.mysimpletweets;
 
 import android.content.Context;
 
 import io.androidblog.apps.mysimpletweets.models.User;
+import io.androidblog.apps.mysimpletweets.network.TwitterClient;
 
 /*
  * This is the Android application itself and is used to configure various settings

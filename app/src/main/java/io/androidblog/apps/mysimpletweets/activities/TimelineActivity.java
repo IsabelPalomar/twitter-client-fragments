@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,20 +25,22 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 import io.androidblog.apps.mysimpletweets.R;
-import io.androidblog.apps.mysimpletweets.fragments.ComposeTweetDialogFragment;
-import io.androidblog.apps.mysimpletweets.models.User;
-import io.androidblog.apps.mysimpletweets.network.TwitterApplication;
-import io.androidblog.apps.mysimpletweets.network.TwitterClient;
 import io.androidblog.apps.mysimpletweets.adapters.CustomRecyclerViewAdapter;
+import io.androidblog.apps.mysimpletweets.fragments.ComposeTweetDialogFragment;
 import io.androidblog.apps.mysimpletweets.models.Tweet;
+import io.androidblog.apps.mysimpletweets.models.User;
+import io.androidblog.apps.mysimpletweets.TwitterApplication;
+import io.androidblog.apps.mysimpletweets.network.TwitterClient;
 import io.androidblog.apps.mysimpletweets.utils.EndlessRecyclerViewScrollListener;
 
-public class TimelineActivity extends AppCompatActivity implements ComposeTweetDialogFragment.ComposeTweetDialogFragmentListener{
+public class TimelineActivity extends AppCompatActivity implements ComposeTweetDialogFragment.ComposeTweetDialogFragmentListener {
 
     @BindView(R.id.rvTweets)
     RecyclerView rvTweets;
     @BindView(R.id.fab)
     FloatingActionButton fab;
+    @BindView(R.id.srlTweets)
+    SwipeRefreshLayout srlTweets;
     private TwitterClient client;
     ArrayList<Tweet> tweets;
     CustomRecyclerViewAdapter customAdapter;
@@ -74,6 +77,17 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
                 populateTimeline();
             }
         });
+
+        srlTweets.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                populateTimeline();
+            }
+        });
+
+
+
     }
 
     private void populateTimeline() {
@@ -82,11 +96,14 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 tweets.addAll(Tweet.fromJSONArray(response));
                 customAdapter.addAll(tweets);
+                srlTweets.setRefreshing(false);
+
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("DEBUG", errorResponse.toString());
+                Toast.makeText(TimelineActivity.this, "Error" + errorResponse.toString(), Toast.LENGTH_SHORT).show();
             }
         }, since, count);
     }
@@ -102,7 +119,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     @Override
     public void onFinishComposeTweetDialogFragment(final Tweet tweet) {
 
-        client.statusesUpdate(new TextHttpResponseHandler(){
+        client.statusesUpdate(new TextHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String response) {
@@ -116,7 +133,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(TimelineActivity.this, "Error" + responseString.toString() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(TimelineActivity.this, "Error" + responseString.toString(), Toast.LENGTH_SHORT).show();
             }
 
         }, tweet);
