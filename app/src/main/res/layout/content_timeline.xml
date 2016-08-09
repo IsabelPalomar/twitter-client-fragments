@@ -9,9 +9,11 @@
     tools:context=".activities.TimelineActivity"
     tools:showIn="@layout/activity_timeline">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvTweets"
-        android:scrollbars="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <fragment android:name="io.androidblog.apps.mysimpletweets.fragments.TweetsListFragment"
+        android:id="@+id/headlines_fragment"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_tweets_list" />
+
 </android.support.v4.widget.SwipeRefreshLayout>
