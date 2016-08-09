@@ -43,7 +43,11 @@
         <activity
             android:name=".activities.TimelineActivity"
             android:label="@string/title_activity_timeline"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Launcher" >
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+            </activity>
+
         <activity android:name=".activities.DetailActivity"></activity>
     </application>
 

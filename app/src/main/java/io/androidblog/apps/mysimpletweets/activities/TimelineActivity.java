@@ -49,6 +49,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         ButterKnife.bind(this);
@@ -89,6 +90,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
 
     }
+
 
     private void populateTimeline() {
         client.getHomeTimeline(new JsonHttpResponseHandler() {
