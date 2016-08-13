@@ -27,6 +27,7 @@ import cz.msebera.android.httpclient.Header;
 import io.androidblog.apps.mysimpletweets.R;
 import io.androidblog.apps.mysimpletweets.adapters.CustomRecyclerViewAdapter;
 import io.androidblog.apps.mysimpletweets.fragments.ComposeTweetDialogFragment;
+import io.androidblog.apps.mysimpletweets.fragments.TweetsListFragment;
 import io.androidblog.apps.mysimpletweets.models.Tweet;
 import io.androidblog.apps.mysimpletweets.models.User;
 import io.androidblog.apps.mysimpletweets.TwitterApplication;
@@ -35,15 +36,12 @@ import io.androidblog.apps.mysimpletweets.utils.EndlessRecyclerViewScrollListene
 
 public class TimelineActivity extends AppCompatActivity implements ComposeTweetDialogFragment.ComposeTweetDialogFragmentListener {
 
-    @BindView(R.id.rvTweets)
-    RecyclerView rvTweets;
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.srlTweets)
     SwipeRefreshLayout srlTweets;
     private TwitterClient client;
-    ArrayList<Tweet> tweets;
-    CustomRecyclerViewAdapter customAdapter;
+    TweetsListFragment tweetsListFragment;
     int since = 1;
     int count = 25;
 
@@ -54,22 +52,18 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         setContentView(R.layout.activity_timeline);
         ButterKnife.bind(this);
 
+        if(savedInstanceState == null){
+            tweetsListFragment = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         client = TwitterApplication.getRestClient();
         populateTimeline();
 
-        tweets = new ArrayList<>();
-        rvTweets.setHasFixedSize(true);
-        customAdapter = new CustomRecyclerViewAdapter(this, tweets, getSupportFragmentManager());
-        rvTweets.setAdapter(customAdapter);
 
-        // Add the scroll listener
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvTweets.setLayoutManager(linearLayoutManager);
-
-        rvTweets.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+        /*rvTweets.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 // Triggered only when new data needs to be appended to the list
@@ -77,7 +71,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
                 since += 25;
                 populateTimeline();
             }
-        });
+        });*/
 
         srlTweets.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -96,8 +90,11 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         client.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                tweets.addAll(Tweet.fromJSONArray(response));
-                customAdapter.addAll(tweets);
+                //tweets.addAll(Tweet.fromJSONArray(response));
+                //customAdapter.addAll(tweets);
+
+                tweetsListFragment.addAll(Tweet.fromJSONArray(response));
+
                 srlTweets.setRefreshing(false);
 
             }
@@ -128,8 +125,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
                 User user = TwitterApplication.getUser();
                 tweet.setUser(user);
-                customAdapter.insert(0, tweet);
-                rvTweets.scrollToPosition(0);
+                tweetsListFragment.addTweet(tweet);
 
             }
 

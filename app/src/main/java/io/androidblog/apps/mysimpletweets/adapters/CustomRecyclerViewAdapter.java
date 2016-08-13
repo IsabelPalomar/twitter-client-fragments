@@ -138,6 +138,13 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         notifyDataSetChanged();
     }
 
+    // Clean all elements of the recycler
+    public void clear() {
+        tweets.clear();
+        notifyDataSetChanged();
+    }
+
+
     // Insert a new item to the RecyclerView on a predefined position
     public void insert(int position, Tweet tweet) {
         tweets.add(position, tweet);
