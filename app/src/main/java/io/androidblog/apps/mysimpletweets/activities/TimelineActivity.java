@@ -40,10 +40,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     FloatingActionButton fab;
     @BindView(R.id.srlTweets)
     SwipeRefreshLayout srlTweets;
-    private TwitterClient client;
     TweetsListFragment tweetsListFragment;
-    int since = 1;
-    int count = 25;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,60 +49,14 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         setContentView(R.layout.activity_timeline);
         ButterKnife.bind(this);
 
-        if(savedInstanceState == null){
-            tweetsListFragment = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
-        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        client = TwitterApplication.getRestClient();
-        populateTimeline();
-
-
-        /*rvTweets.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to the bottom of the list
-                since += 25;
-                populateTimeline();
-            }
-        });*/
-
-        srlTweets.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-                populateTimeline();
-            }
-        });
-
 
 
     }
 
-
-    private void populateTimeline() {
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                //tweets.addAll(Tweet.fromJSONArray(response));
-                //customAdapter.addAll(tweets);
-
-                tweetsListFragment.addAll(Tweet.fromJSONArray(response));
-
-                srlTweets.setRefreshing(false);
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("DEBUG", errorResponse.toString());
-                Toast.makeText(TimelineActivity.this, "Error" + errorResponse.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }, since, count);
-    }
 
     @OnClick(R.id.fab)
     public void createTweet() {
@@ -118,7 +69,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     @Override
     public void onFinishComposeTweetDialogFragment(final Tweet tweet) {
 
-        client.statusesUpdate(new TextHttpResponseHandler() {
+        /*client.statusesUpdate(new TextHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String response) {
@@ -134,7 +85,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
                 Toast.makeText(TimelineActivity.this, "Error" + responseString.toString(), Toast.LENGTH_SHORT).show();
             }
 
-        }, tweet);
+        }, tweet);*/
 
     }
 }

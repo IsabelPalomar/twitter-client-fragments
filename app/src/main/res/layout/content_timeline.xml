@@ -9,7 +9,7 @@
     tools:context=".activities.TimelineActivity"
     tools:showIn="@layout/activity_timeline">
 
-    <fragment android:name="io.androidblog.apps.mysimpletweets.fragments.TweetsListFragment"
+    <fragment android:name="io.androidblog.apps.mysimpletweets.fragments.HomeTimelineFragment"
         android:id="@+id/fragment_timeline"
         android:layout_weight="1"
         android:layout_width="0dp"
