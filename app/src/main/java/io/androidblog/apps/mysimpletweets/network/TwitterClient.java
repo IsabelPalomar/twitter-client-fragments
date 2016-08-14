@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import io.androidblog.apps.mysimpletweets.models.Tweet;
@@ -46,6 +47,14 @@ public class TwitterClient extends OAuthBaseClient {
 		getClient().get(apiUrl, params, handler);
 	}
 
+	public void geMentionsTimeline(JsonHttpResponseHandler handler, int since, int count) {
+
+		String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+		RequestParams params = new RequestParams();
+		params.put("count", count);
+		getClient().get(apiUrl, params, handler);
+	}
+
 	public void statusesUpdate(AsyncHttpResponseHandler handler, Tweet tweet){
 
 		String apiUrl = getApiUrl("statuses/update.json");
@@ -59,15 +68,4 @@ public class TwitterClient extends OAuthBaseClient {
 
 	}
 
-
-
-
-	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
-	 * 	  i.e getApiUrl("statuses/home_timeline.json");
-	 * 2. Define the parameters to pass to the request (query or body)
-	 *    i.e RequestParams params = new RequestParams("foo", "bar");
-	 * 3. Define the request method and make a call to the client
-	 *    i.e client.get(apiUrl, params, handler);
-	 *    i.e client.post(apiUrl, params, handler);
-	 */
 }

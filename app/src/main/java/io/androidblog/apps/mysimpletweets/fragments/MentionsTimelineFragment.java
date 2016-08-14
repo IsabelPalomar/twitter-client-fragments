@@ -2,7 +2,6 @@ package io.androidblog.apps.mysimpletweets.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +19,7 @@ import io.androidblog.apps.mysimpletweets.TwitterApplication;
 import io.androidblog.apps.mysimpletweets.models.Tweet;
 import io.androidblog.apps.mysimpletweets.network.TwitterClient;
 
-public class HomeTimelineFragment extends TweetsListFragment {
-
+public class MentionsTimelineFragment extends TweetsListFragment{
     private TwitterClient client;
     int since = 1;
     int count = 25;
@@ -55,7 +53,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
     }
 
     private void populateTimeline() {
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
+        client.geMentionsTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 //tweets.addAll(Tweet.fromJSONArray(response));
@@ -74,7 +72,4 @@ public class HomeTimelineFragment extends TweetsListFragment {
             }
         }, since, count);
     }
-
-
-
 }
