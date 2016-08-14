@@ -1,16 +1,23 @@
 package io.androidblog.apps.mysimpletweets.activities;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +41,13 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     TabLayout tlTwitter;
     @BindView(R.id.vpTwitter)
     ViewPager vpTwitter;
+    @BindView(R.id.ndTweets)
+    DrawerLayout ndTweets;
+    @BindView(R.id.nvViewTweets)
+    NavigationView nvViewTweets;
 
+    private ActionBarDrawerToggle drawerToggle;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_NoActionBar);
@@ -43,9 +56,52 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         ButterKnife.bind(this);
 
         setSupportActionBar(tbTwitter);
-        
+
         setupViewPager(vpTwitter);
         tlTwitter.setupWithViewPager(vpTwitter);
+
+        setupDrawerContent(nvViewTweets);
+
+        drawerToggle = setupDrawerToggle();
+
+        // Tie DrawerLayout events to the ActionBarToggle
+        ndTweets.addDrawerListener(drawerToggle);
+
+
+
+    }
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, ndTweets, tbTwitter, R.string.drawer_open,  R.string.drawer_close);
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+
+                    
+                });
+
+    }
+
+    private void selectDrawerItem(MenuItem menuItem) {
+
+        switch(menuItem.getItemId()) {
+            case R.id.navProfile:
+                Intent i = new Intent(this, ProfileActivity.class);
+                startActivity(i);
+                break;
+            case R.id.navLogout:
+                break;
+        }
+
+        // Close the navigation drawer
+        ndTweets.closeDrawers();
 
     }
 
@@ -56,6 +112,35 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         vpTwitter.setAdapter(adapter);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                ndTweets.openDrawer(GravityCompat.START);
+                return true;
+        }
+
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
 
     @OnClick(R.id.fab)
     public void createTweet() {
@@ -88,7 +173,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
     }
 
-    private class CustomFragmentPagerAdapter extends FragmentPagerAdapter{
+    private class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();

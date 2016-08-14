@@ -7,4 +7,6 @@
     <string name="welcome_to_twitter">Welcome to Twitter</string>
     <string name="twitter_description">Get real-time updated about what matters to you</string>
 
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>
