@@ -2,9 +2,6 @@ package io.androidblog.apps.mysimpletweets.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.activeandroid.util.Log;
@@ -14,12 +11,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
-import io.androidblog.apps.mysimpletweets.R;
 import io.androidblog.apps.mysimpletweets.TwitterApplication;
 import io.androidblog.apps.mysimpletweets.models.Tweet;
 import io.androidblog.apps.mysimpletweets.network.TwitterClient;
 
-public class MentionsTimelineFragment extends TweetsListFragment{
+public class UserTimeLineFragment extends TweetsListFragment {
+
     private TwitterClient client;
     int since = 1;
     int count = 25;
@@ -32,36 +29,23 @@ public class MentionsTimelineFragment extends TweetsListFragment{
         client = TwitterApplication.getRestClient();
         populateTimeline();
 
-                /*rvTweets.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to the bottom of the list
-                since += 25;
-                populateTimeline();
-            }
-        });*/
+    }
 
-        /*srlTweets.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-                populateTimeline();
-            }
-        });*/
-
+    public static UserTimeLineFragment newInstance(String screenName) {
+        UserTimeLineFragment userFragment = new UserTimeLineFragment();
+        Bundle args = new Bundle();
+        args.putString("screen_name", screenName);
+        userFragment.setArguments(args);
+        return userFragment;
     }
 
     private void populateTimeline() {
-        client.getMentionsTimeline(new JsonHttpResponseHandler() {
+
+        String screenName = getArguments().getString("screen_name");
+        client.getUserTimeline(screenName, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                //tweets.addAll(Tweet.fromJSONArray(response));
-                //customAdapter.addAll(tweets);
-
                 addAll(Tweet.fromJSONArray(response));
-
-                //srlTweets.setRefreshing(false);
 
             }
 
