@@ -4,11 +4,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/navProfile"
-            android:icon="@android:drawable/ic_dialog_info"
-            android:title="First" />
+            android:icon="@drawable/account"
+            android:title="Profile" />
         <item
             android:id="@+id/navLogout"
-            android:icon="@android:drawable/ic_dialog_map"
-            android:title="Second" />
+            android:icon="@drawable/logout"
+            android:title="Logout" />
     </group>
 </menu>

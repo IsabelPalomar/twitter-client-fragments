@@ -26,10 +26,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.androidblog.apps.mysimpletweets.R;
+import io.androidblog.apps.mysimpletweets.TwitterApplication;
 import io.androidblog.apps.mysimpletweets.fragments.ComposeTweetDialogFragment;
 import io.androidblog.apps.mysimpletweets.fragments.HomeTimelineFragment;
 import io.androidblog.apps.mysimpletweets.fragments.MentionsTimelineFragment;
 import io.androidblog.apps.mysimpletweets.models.Tweet;
+import io.androidblog.apps.mysimpletweets.network.TwitterClient;
 
 public class TimelineActivity extends AppCompatActivity implements ComposeTweetDialogFragment.ComposeTweetDialogFragmentListener {
 
@@ -47,7 +49,8 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     NavigationView nvViewTweets;
 
     private ActionBarDrawerToggle drawerToggle;
-    
+    TwitterClient client;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_NoActionBar);
@@ -66,8 +69,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
         // Tie DrawerLayout events to the ActionBarToggle
         ndTweets.addDrawerListener(drawerToggle);
-
-
+        client = TwitterApplication.getRestClient();
 
     }
 
@@ -97,6 +99,8 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
                 startActivity(i);
                 break;
             case R.id.navLogout:
+                client.clearAccessToken();
+                this.finish();
                 break;
         }
 
@@ -107,7 +111,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
     private void setupViewPager(ViewPager vpTwitter) {
         CustomFragmentPagerAdapter adapter = new CustomFragmentPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new HomeTimelineFragment(), "Home");
+        adapter.addFragment(new HomeTimelineFragment(), "Timeline");
         adapter.addFragment(new MentionsTimelineFragment(), "Mentions");
         vpTwitter.setAdapter(adapter);
     }
