@@ -29,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.androidblog.apps.mysimpletweets.R;
 import io.androidblog.apps.mysimpletweets.activities.DetailActivity;
+import io.androidblog.apps.mysimpletweets.activities.ProfileActivity;
 import io.androidblog.apps.mysimpletweets.activities.TimelineActivity;
 import io.androidblog.apps.mysimpletweets.fragments.ComposeTweetDialogFragment;
 import io.androidblog.apps.mysimpletweets.models.Tweet;
@@ -116,11 +117,23 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
             }
         });
 
-        holder.rlTweet.setOnClickListener(new View.OnClickListener() {
+        holder.tvBody.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getContext(), DetailActivity.class);
                 i.putExtra("tweet", tweet);
+                getContext().startActivity(i);
+
+            }
+        });
+
+        holder.ivUserImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), ProfileActivity.class);
+                i.putExtra("screen_name", tweet.getUser().getScreenName());
+                i.putExtra("get_by_id", true);
+                i.putExtra("uid", tweet.getUser().getUid());
                 getContext().startActivity(i);
 
             }

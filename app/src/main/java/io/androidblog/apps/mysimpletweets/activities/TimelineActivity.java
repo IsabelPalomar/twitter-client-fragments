@@ -18,6 +18,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
+import cz.msebera.android.httpclient.Header;
+
+import com.loopj.android.http.TextHttpResponseHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +34,9 @@ import io.androidblog.apps.mysimpletweets.TwitterApplication;
 import io.androidblog.apps.mysimpletweets.fragments.ComposeTweetDialogFragment;
 import io.androidblog.apps.mysimpletweets.fragments.HomeTimelineFragment;
 import io.androidblog.apps.mysimpletweets.fragments.MentionsTimelineFragment;
+import io.androidblog.apps.mysimpletweets.fragments.TweetsListFragment;
 import io.androidblog.apps.mysimpletweets.models.Tweet;
+import io.androidblog.apps.mysimpletweets.models.User;
 import io.androidblog.apps.mysimpletweets.network.TwitterClient;
 
 public class TimelineActivity extends AppCompatActivity implements ComposeTweetDialogFragment.ComposeTweetDialogFragmentListener {
@@ -50,6 +56,8 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
     private ActionBarDrawerToggle drawerToggle;
     TwitterClient client;
+    TweetsListFragment tweetsListFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +78,10 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         // Tie DrawerLayout events to the ActionBarToggle
         ndTweets.addDrawerListener(drawerToggle);
         client = TwitterApplication.getRestClient();
+
+        if(savedInstanceState == null){
+           tweetsListFragment = (TweetsListFragment) getSupportFragmentManager().findFragmentByTag("TweetsListFragment");
+        }
 
     }
 
@@ -157,7 +169,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     @Override
     public void onFinishComposeTweetDialogFragment(final Tweet tweet) {
 
-        /*client.statusesUpdate(new TextHttpResponseHandler() {
+        client.statusesUpdate(new TextHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String response) {
@@ -173,7 +185,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
                 Toast.makeText(TimelineActivity.this, "Error" + responseString.toString(), Toast.LENGTH_SHORT).show();
             }
 
-        }, tweet);*/
+        }, tweet);
 
     }
 

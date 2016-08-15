@@ -12,6 +12,10 @@ public class User implements Parcelable {
     private long uid;
     private String screenName;
     private String profileImageUrl;
+    private String profileBannerUrl;
+    private String followers;
+    private String following;
+    private String description;
 
     public String getName() {
         return name;
@@ -45,6 +49,22 @@ public class User implements Parcelable {
         this.profileImageUrl = profileImageUrl;
     }
 
+    public String getFollowers() {
+        return followers;
+    }
+
+    public String getFollowing() {
+        return following;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getProfileBannerUrl() {
+        return profileBannerUrl;
+    }
+
     public static User fromJSON(JSONObject jsonObject){
         User user = new User();
 
@@ -53,6 +73,10 @@ public class User implements Parcelable {
             user.uid = jsonObject.getLong("id");
             user.screenName = jsonObject.getString("screen_name");
             user.profileImageUrl = jsonObject.getString("profile_image_url");
+            user.profileBannerUrl = jsonObject.getString("profile_banner_url");
+            user.followers = jsonObject.getString("followers_count");
+            user.following = jsonObject.getString("friends_count");
+            user.description = jsonObject.getString("description");
         } catch (JSONException e) {
             e.printStackTrace();
         }
